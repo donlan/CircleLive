@@ -1,10 +1,13 @@
 package com.dong.circlelive
 
+import android.app.Activity
 import android.app.ActivityManager
 import android.app.ActivityManager.RunningAppProcessInfo
 import android.content.Context
 import android.content.Context.ACTIVITY_SERVICE
-import android.content.pm.PackageManager
+import android.content.Intent
+import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
 
 
 /**
@@ -29,3 +32,20 @@ fun getAppName(context: Context, pID: Int): String? {
     }
     return processName
 }
+
+
+fun Activity.start(activityClazz: Class<*>, finishActivity: Boolean = false) {
+    startActivity(Intent(this, activityClazz))
+    if (finishActivity) {
+        finish()
+    }
+}
+
+fun Fragment.start(activityClazz: Class<*>, finishActivity: Boolean = false) {
+    startActivity(Intent(requireContext(), activityClazz))
+    if (finishActivity) {
+        activity?.finish()
+    }
+}
+
+fun getString(@StringRes resId: Int) = appContext.getString(resId)
